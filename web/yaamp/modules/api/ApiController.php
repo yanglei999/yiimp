@@ -161,15 +161,22 @@ class ApiController extends CommonController
 
 				$btcmhd = yaamp_profitability($coin);
 				$btcmhd = mbitcoinvaluetoa($btcmhd);
+				
+				//Add network hash difficulty and symbol
+                		$min_ttf = $coin->network_ttf>0? min($coin->actual_ttf, $coin->network_ttf): $coin->actual_ttf;
+                		$network_hash = $coin->difficulty * 0x100000000 / ($min_ttf? $min_ttf: 60);
 
 				$data[$symbol] = array(
 					'algo' => $coin->algo,
 					'port' => getAlgoPort($coin->algo),
 					'name' => $coin->name,
+					'reward' => $coin->reward,
 					'height' => (int) $coin->block_height,
+					'difficulty' => $difficulty,
 					'workers' => $workers,
 					'shares' =>  (int) arraySafeVal($shares,'shares'),
 					'hashrate' => round($factor * $algo_hashrate),
+					'network_hashrate' => $network_hash,
 					'estimate' => $btcmhd,
 					//'percent' => round($factor * 100, 1),
 					'24h_blocks' => (int) arraySafeVal($res24h,'a'),
@@ -433,4 +440,3 @@ class ApiController extends CommonController
 	}
 
 }
-
