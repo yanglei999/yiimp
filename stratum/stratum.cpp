@@ -200,6 +200,7 @@ YAAMP_ALGO g_algos[] =
 	{"x14", x14_hash, 1, 0, 0},
 	{"x15", x15_hash, 1, 0, 0},
 	{"x16r", x16r_hash, 0x100, 0, 0},
+    {"x16rv2", x16rv2_hash, 0x100, 0, 0},
 	{"x16rt", x16rt_hash, 0x100, 0, 0},
 	{"x16s", x16s_hash, 0x100, 0, 0},
 	{"x17", x17_hash, 1, 0, 0},
