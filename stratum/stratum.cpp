@@ -163,7 +163,6 @@ YAAMP_ALGO g_algos[] =
 	{"myr-gr", groestlmyriad_hash, 1, 0, 0}, /* groestl + sha 64 */
 	{"neoscrypt", neoscrypt_hash, 0x10000, 0, 0},
 	{"nist5", nist5_hash, 1, 0, 0},
-	{"odo", odo_hash, 1, 0, 0},
 	{"pawelhash", pawelhash_hash, 0x100, 0, 0},
 	{"penta", penta_hash, 1, 0, 0},
 	{"phi", phi_hash, 1, 0, 0},
