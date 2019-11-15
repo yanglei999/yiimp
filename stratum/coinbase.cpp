@@ -529,7 +529,7 @@ void coinbase_create(YAAMP_COIND *coind, YAAMP_JOB_TEMPLATE *templ, json_value *
 			return;
 		}
 	}
-	
+	else if(strcmp(coind->symbol, "PGN") == 0)  {
 	bool founder_enabled = json_get_bool(json_result, "founder_payments_started");
 	json_value* founder = json_get_object(json_result, "founder");
 
@@ -568,6 +568,7 @@ void coinbase_create(YAAMP_COIND *coind, YAAMP_JOB_TEMPLATE *templ, json_value *
 		return;
 		}
 	}
+}
 
 	// 2 txs are required on these coins, one for foundation (dev fees)
 	if(coind->charity_percent && !coind->hasmasternodes)
