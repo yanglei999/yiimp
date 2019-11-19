@@ -417,15 +417,15 @@ echo "\n";
 }
 echo "alertnotify=echo %s | mail -s \"{$coin->name} alert!\" ".YAAMP_ADMIN_EMAIL."\n";
 if (empty($coin->dedicatedport)) {
-	      			echo "blocknotify=blocknotify 127.0.0.1:$port {$coin->id} %s\n";}
-	      			else {
-	      			echo "blocknotify=blocknotify 127.0.0.1:$dedport {$coin->id} %s\n";}
+echo "blocknotify=blocknotify 127.0.0.1:$port {$coin->id} %s\n";}
+else {
+echo "blocknotify=blocknotify 127.0.0.1:$dedport {$coin->id} %s\n";}
 echo " \n";
 echo "' | sudo -E tee {$coin->conf_folder}/$program.conf >/dev/null 2>&1\n";
 echo CHtml::closetag("pre");
 
 echo CHtml::tag("hr");
-echo "<b>Add coind to system startup</b>:";
+echo "<b>Add coind to system startup (cron)</b>:";
 echo CHtml::opentag("pre");
 echo "(crontab -l 2>/dev/null; echo \"@reboot sleep 60 && {$coin->program} -datadir={$coin->conf_folder} -conf=$program.conf -daemon -shrinkdebugfile\") | crontab -\n";
 echo "\n";
@@ -444,6 +444,7 @@ echo "Or if your coin has a -cli (bitcoin-cli) file...\n";
 echo "$program-cli -datadir={$coin->conf_folder} -conf=$program.conf stop\n\n";
 echo "To run other CLI functions:\n";
 echo "$program-cli -datadir={$coin->conf_folder} -conf=$program.conf help\n\n";
+echo " \n";
 echo "To edit the coin.config file:\n";
 echo "sudo nano {$coin->conf_folder}/$program.conf\n";
 echo CHtml::closetag("pre");
