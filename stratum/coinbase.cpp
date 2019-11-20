@@ -1092,9 +1092,8 @@ void coinbase_create(YAAMP_COIND *coind, YAAMP_JOB_TEMPLATE *templ, json_value *
 			return;
     }
 	
-       if(strcmp(coind->symbol, "SIN") == 0) {
-
-               // these just get reused
+        if(strcmp(coind->symbol, "SIN") == 0)
+        {
                int npayees = 1;
                char payees[2];
                char sinpayee[256] = {0};
@@ -1103,14 +1102,11 @@ void coinbase_create(YAAMP_COIND *coind, YAAMP_JOB_TEMPLATE *templ, json_value *
                char devscript[1024] = {0};
                const char *devpayaddr = json_get_string(json_result, "payee");
                json_int_t devfee_amount = json_get_int(json_result, "payee_amount");
-
-               // prepare devpay script
                snprintf(devpayee, 255, "%s", devpayaddr);
                base58_decode(devpayee, devscript);
                npayees++;
-               available -= devfee_amount;
 
-               // masternode packs
+               available -= devfee_amount;
                const char* mnpayaddrs[7] = {0};
                json_value* masternodes = json_get_array(json_result, "masternode");
                json_int_t mnamounts[7] = {0};
@@ -1131,7 +1127,6 @@ void coinbase_create(YAAMP_COIND *coind, YAAMP_JOB_TEMPLATE *templ, json_value *
                        job_pack_tx(coind, templ->coinb2, mnamounts[i], sinscript);
                }
 
-               // sequence
                strcat(templ->coinb2, "00000000");
                coind->reward = (double)available/100000000;
                return;
