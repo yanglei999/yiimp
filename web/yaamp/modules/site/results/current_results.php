@@ -118,7 +118,7 @@ foreach($algos as $item)
 	if ($defaultalgo == $algo) echo "<tr style='cursor: pointer; background-color: #d9d9d9;' onclick='javascript:select_algo(\"$algo\")'>";
 	else echo "<tr style='cursor: pointer' class='ssrow' onclick='javascript:select_algo(\"$algo\")'>";
 	echo "<td style='font-size: 110%; background-color: #f2f2f2;'><b>$algo</b></td>";
-  echo "<td align=center style='font-size: .8em; background-color: #f2f2f2;'></td>";
+  	echo "<td align=center style='font-size: .8em; background-color: #f2f2f2;'></td>";
 	echo "<td align=center style='font-size: .8em; background-color: #f2f2f2;'></td>";
 	echo "<td align=center style='font-size: .8em; background-color: #f2f2f2;'></td>";
 	echo "<td align=center style='font-size: .8em; background-color: #f2f2f2;'></td>";
@@ -157,31 +157,31 @@ foreach($algos as $item)
 
       $dontsell = $coin->dontsell;
       if ($dontsell == 1)
-      echo "<td align='center' valign='top' style='font-size: .8em;'><img width=13 src='/images/cancel.png'></td>";
+      	echo "<td align='center' valign='top' style='font-size: .8em;'><img width=13 src='/images/cancel.png'></td>";
       else
-      echo "<td align='center' valign='top' style='font-size: .8em;'><img width=13 src='/images/ok.png'></td>";
+      	echo "<td align='center' valign='top' style='font-size: .8em;'><img width=13 src='/images/ok.png'></td>";
 
 
       if ($port_count == 1) echo "<td align='center' style='font-size: .8em;'><b>" . $port_db->port . "</b></td>";
-			  else echo "<td align='center' style='font-size: .8em;'><b>$port</b></td>";
-			echo "<td align='center' style='font-size: .8em;'>$symbol</td>";
-			if ($port_count == 1) echo "<td align='center' style='font-size: .8em;'>" . $port_db->workers . "</td>";
-			  else echo "<td align='center' style='font-size: .8em;'>$workers</td>";
-			$pool_hash = yaamp_coin_rate($coin->id);
-			$pool_hash_sfx = $pool_hash ? Itoa2($pool_hash) . 'h/s' : '';
-			echo "<td align='center' style='font-size: .8em;'>$pool_hash_sfx</td>";
-			$pool_hash_sfx = $pool_hash? Itoa2($pool_hash).'h/s': '';
-			$min_ttf = $coin->network_ttf>0? min($coin->actual_ttf, $coin->network_ttf): $coin->actual_ttf;
-			$network_hash = $coin->difficulty * 0x100000000 / ($min_ttf? $min_ttf: 60);
-			$network_hash = $network_hash? Itoa2($network_hash).'h/s': '';
-			echo "<td align='center' style='font-size: .8em;' data='$pool_hash'>$network_hash</td>";
-			echo "<td align='center' style='font-size: .8em;'>{$fees}%</td>";
-			$btcmhd = yaamp_profitability($coin);
-			$btcmhd = mbitcoinvaluetoa($btcmhd);
-			echo "<td align='center' style='font-size: .8em;'>$btcmhd</td>";
-			echo "</tr>";
-			}
+	else echo "<td align='center' style='font-size: .8em;'><b>$port</b></td>";
+	echo "<td align='center' style='font-size: .8em;'>$symbol</td>";
+	if ($port_count == 1) echo "<td align='center' style='font-size: .8em;'>" . $port_db->workers . "</td>";
+		else echo "<td align='center' style='font-size: .8em;'>$workers</td>";
+	$pool_hash = yaamp_coin_rate($coin->id);
+	$pool_hash_sfx = $pool_hash ? Itoa2($pool_hash) . 'h/s' : '';
+	echo "<td align='center' style='font-size: .8em;'>$pool_hash_sfx</td>";
+	$pool_hash_sfx = $pool_hash? Itoa2($pool_hash).'h/s': '';
+	$min_ttf = $coin->network_ttf>0? min($coin->actual_ttf, $coin->network_ttf): $coin->actual_ttf;
+	$network_hash = $coin->difficulty * 0x100000000 / ($min_ttf? $min_ttf: 60);
+	$network_hash = $network_hash? Itoa2($network_hash).'h/s': '';
+	echo "<td align='center' style='font-size: .8em;' data='$pool_hash'>$network_hash</td>";
+	echo "<td align='center' style='font-size: .8em;'>{$fees}%</td>";
+	$btcmhd = yaamp_profitability($coin);
+	$btcmhd = mbitcoinvaluetoa($btcmhd);
+	echo "<td align='center' style='font-size: .8em;'>$btcmhd</td>";
+	echo "</tr>";
 		}
+	}
 
 	$total_coins+= $coins;
 	$total_miners+= $workers;

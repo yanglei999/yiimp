@@ -3,10 +3,12 @@
 
 double client_normalize_difficulty(double difficulty)
 {
-	if(difficulty < g_stratum_min_diff) difficulty = g_stratum_min_diff;
+	double min_stratum_diff = g_stratum_difficulty * 0.5;
+	if(difficulty < min_stratum_diff)
+		difficulty = min_stratum_diff;
 	else if(difficulty < 1) difficulty = floor(difficulty*1000/2)/1000*2;
 	else if(difficulty > 1) difficulty = floor(difficulty/2)*2;
-	if(difficulty > g_stratum_max_diff) difficulty = g_stratum_max_diff;
+
 	return difficulty;
 }
 
@@ -98,3 +100,9 @@ void client_initialize_difficulty(YAAMP_CLIENT *client)
 	}
 
 }
+
+
+
+
+
+

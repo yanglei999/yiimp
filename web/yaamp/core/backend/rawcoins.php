@@ -9,7 +9,6 @@ function updateRawcoins()
 
 	exchange_set_default('alcurex', 'disabled', true);
 	exchange_set_default('binance', 'disabled', true);
-	exchange_set_default('bter', 'disabled', true);
 	exchange_set_default('empoex', 'disabled', true);
 	exchange_set_default('coinbene', 'disabled', true);
 	exchange_set_default('coinexchange', 'disabled', true);
@@ -123,26 +122,6 @@ function updateRawcoins()
 				$symbol = strtoupper($e[0]);
 
 				updateRawCoin('c-cex', $symbol, arraySafeVal($names, $e[0], 'unknown'));
-			}
-		}
-	}
-
-	if (!exchange_get('bter', 'disabled')) {
-		$list = bter_api_query('marketlist');
-		if(is_object($list) && is_array($list->data))
-		{
-			dborun("UPDATE markets SET deleted=true WHERE name='bter'");
-			foreach($list->data as $item) {
-				if (strtoupper($item->curr_b) !== 'BTC')
-					continue;
-				if (strpos($item->name, 'Asset') !== false)
-					continue;
-				if (strpos($item->name, 'BitShares') !== false && $item->symbol != 'BTS')
-					continue;
-				// ignore some dead coins and assets
-				if (in_array($item->symbol, array('BITGLD','DICE','ROX','TOKEN')))
-					continue;
-				updateRawCoin('bter', $item->symbol, $item->name);
 			}
 		}
 	}
@@ -453,16 +432,6 @@ function updateRawcoins()
 function updateRawCoin($marketname, $symbol, $name='unknown')
 {
 	if($symbol == 'BTC') return;
-	
-// Restrict $symbol and $name to strict defined set of characters (to protect from rogue exchange or DNS attack on exchange)
-	if (preg_match('/[^A-Za-z0-9_\$]/', $symbol)) {
-		debuglog("weird symbol $symbol from $marketname");
-		return;
-		}
-	if (preg_match('/[^A-Za-z0-9_\$ ]/', $name)) {
-		debuglog("weird name $name for symbol $symbol from $marketname");
-		return;
-		}
 
 	$coin = getdbosql('db_coins', "symbol=:symbol", array(':symbol'=>$symbol));
 	if(!$coin && YAAMP_CREATE_NEW_COINS)
@@ -535,3 +504,4 @@ function updateRawCoin($marketname, $symbol, $name='unknown')
 	}
 
 }
+

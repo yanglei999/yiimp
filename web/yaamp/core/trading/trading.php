@@ -3,13 +3,13 @@ require_once('poloniex_trading.php');
 require_once('binance_trading.php');
 require_once('bittrex_trading.php');
 require_once('bleutrade_trading.php');
-require_once('bter_trading.php');
 require_once('c-cex_trading.php');
 require_once('kraken_trading.php');
 require_once('yobit_trading.php');
 require_once('alcurex_trading.php');
 require_once('coinsmarkets_trading.php');
 require_once('crex24_trading.php');
+require_once('cryptobridge_trading.php');
 require_once('cryptopia_trading.php');
 require_once('hitbtc_trading.php');
 require_once('kucoin_trading.php');
@@ -72,11 +72,6 @@ function runExchange($exchangeName=false)
 				updateBinanceMarkets();
 				break;
 
-			case 'bter':
-				doBterTrading(true);
-				updateBterMarkets();
-				break;
-
 			case 'crex24':
 				doCrex24Trading(true);
 				updateCrex24Markets();
@@ -88,6 +83,7 @@ function runExchange($exchangeName=false)
 				break;
 
 			case 'cryptobridge':
+				doCryptobridgeTrading(true);
 				updateCryptoBridgeMarkets();
 				break;
 
