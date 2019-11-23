@@ -1092,48 +1092,45 @@ void coinbase_create(YAAMP_COIND *coind, YAAMP_JOB_TEMPLATE *templ, json_value *
 			return;
     }
 	
- else if(strcmp(coind->symbol, "SIN") == 0) {
+        if(strcmp(coind->symbol, "SIN") == 0)
+        {
+               int npayees = 1;
+               char payees[2];
+               char sinpayee[256] = {0};
+               char sinscript[1024] = {0};
+               char devpayee[256] = {0};
+               char devscript[1024] = {0};
+               const char *devpayaddr = json_get_string(json_result, "payee");
+               json_int_t devfee_amount = json_get_int(json_result, "payee_amount");
+               snprintf(devpayee, 255, "%s", devpayaddr);
+               base58_decode(devpayee, devscript);
+               npayees++;
 
-		char dests[2048] = { 0 };
-               // these just get reused			char sinpayee[256] = { 0 };
-               int npayees = 1;			char sinscript[1024] = { 0 };
-               char payees[2];			int npayees = 1;
-               char sinpayee[256] = {0};			char payees[3];
-               char sinscript[1024] = {0};	
-               char devpayee[256] = {0};			const char *founder = json_get_string(json_result, "payee");
-               char devscript[1024] = {0};			json_int_t founderreward = json_get_int(json_result, "payee_amount");
-               const char *devpayaddr = json_get_string(json_result, "payee");			if (founder && founderreward) {
-               json_int_t devfee_amount = json_get_int(json_result, "payee_amount");				snprintf(sinpayee, 255, "%s", founder);
+               available -= devfee_amount;
+               const char* mnpayaddrs[7] = {0};
+               json_value* masternodes = json_get_array(json_result, "masternode");
+               json_int_t mnamounts[7] = {0};
+               for(int i = 0; i < masternodes->u.array.length; i++) {
+                       mnpayaddrs[i] = json_get_string(masternodes->u.array.values[i], "payee");
+                       mnamounts[i] = json_get_int(masternodes->u.array.values[i], "amount");
+                       available -= mnamounts[i];
+                       npayees++;
+               }
 
-			base58_decode(sinpayee, sinscript);
-               // prepare devpay script				available -= founderreward;
-               snprintf(devpayee, 255, "%s", devpayaddr);				npayees++;
-               base58_decode(devpayee, devscript);				job_pack_tx(coind, dests, founderreward, sinscript);
-               npayees++;			}
-               available -= devfee_amount;	
+               sprintf(payees, "%02x", npayees);
+               strcat(templ->coinb2, payees);
+               job_pack_tx(coind, templ->coinb2, available, NULL);
+               job_pack_tx(coind, templ->coinb2, devfee_amount, devscript);
+               for(int i = 0; i < masternodes->u.array.length; i++) {
+                       snprintf(sinpayee, 255, "%s", mnpayaddrs[i]);
+                       base58_decode(sinpayee, sinscript);
+                       job_pack_tx(coind, templ->coinb2, mnamounts[i], sinscript);
+               }
 
-		json_value* masternodes = json_get_array(json_result, "masternode");
-               // masternode packs			bool started = json_get_bool(json_result, "masternode_payments_started");
-               const char* mnpayaddrs[7] = {0};			if (started && masternodes->u.array.length) for (int i = 0; i < masternodes->u.array.length; i++) {
-               json_value* masternodes = json_get_array(json_result, "masternode");				const char *payee = json_get_string(masternodes->u.array.values[i], "payee");
-               json_int_t mnamounts[7] = {0};				json_int_t amount = json_get_int(masternodes->u.array.values[i], "amount");
-               for(int i = 0; i < masternodes->u.array.length; i++) {				if (payee && amount) {
-                       mnpayaddrs[i] = json_get_string(masternodes->u.array.values[i], "payee");					snprintf(sinpayee, 255, "%s", payee);
-                       mnamounts[i] = json_get_int(masternodes->u.array.values[i], "amount");					base58_decode(sinpayee, sinscript);
-                       available -= mnamounts[i];					available -= amount;
-                       npayees++;					npayees++;
-               }					job_pack_tx(coind, dests, amount, sinscript);
-
-			}
-               sprintf(payees, "%02x", npayees);			}
-               strcat(templ->coinb2, payees);			sprintf(payees, "%02x", npayees);
-               job_pack_tx(coind, templ->coinb2, available, NULL);			strcat(templ->coinb2, payees);
-               job_pack_tx(coind, templ->coinb2, devfee_amount, devscript);			job_pack_tx(coind, templ->coinb2, available, NULL);
-               for(int i = 0; i < masternodes->u.array.length; i++) {			strcat(templ->coinb2, dests);
-                       snprintf(sinpayee, 255, "%s", mnpayaddrs[i]);			strcat(templ->coinb2, "00000000");
-                       base58_decode(sinpayee, sinscript);			coind->reward = (double)available / 100000000;
-                       job_pack_tx(coind, templ->coinb2, mnamounts[i], sinscript);			return;
-               }	    }
+               strcat(templ->coinb2, "00000000");
+               coind->reward = (double)available/100000000;
+               return;
+        }
 	
 	if(strcmp(coind->symbol, "BITC") == 0) 
 	{
@@ -1482,5 +1479,4 @@ void coinbase_create(YAAMP_COIND *coind, YAAMP_JOB_TEMPLATE *templ, json_value *
 //	debuglog("coinb1 %s\n", templ->coinb1);
 //	debuglog("coinb2 %s\n", templ->coinb2);
 }
-
 
