@@ -341,12 +341,6 @@ echo CUFHtml::activeTextField($coin, 'rpcencoding', array('maxlength'=>5,'style'
 echo '<p class="formHint2">POW/POS</p>';
 echo CUFHtml::closeCtrlHolder();
 
-echo CUFHtml::openActiveCtrlHolder($coin, 'dedicatedport');
-echo CUFHtml::activeLabelEx($coin, 'dedicatedport');
-echo CUFHtml::activeTextField($coin, 'dedicatedport', array('maxlength'=>5,'style'=>'width: 60px;'));
-echo '<p class="formHint2">Run addport to get Port Number, leave blank if not using dedicated coin ports.</p>';
-echo CUFHtml::closeCtrlHolder();
-
 echo CUFHtml::openActiveCtrlHolder($coin, 'rpccurl');
 echo CUFHtml::activeLabelEx($coin, 'rpccurl');
 echo CUFHtml::activeCheckBox($coin, 'rpccurl');
@@ -404,7 +398,6 @@ echo "<b>If you manually built a coin without daemonbuilder, copy this entire se
 echo CHtml::opentag("pre");
 echo "mkdir -p {$coin->conf_folder}\n";
 $port = getAlgoPort($coin->algo);
-$dedport = $coin->dedicatedport;
 echo "echo '\n";
 echo " \n";
 echo "rpcuser={$coin->rpcuser}\n";
@@ -424,10 +417,7 @@ echo "{$coin->specifications}\n";
 echo "\n";
 }
 echo "alertnotify=echo %s | mail -s \"{$coin->name} alert!\" ".YAAMP_ADMIN_EMAIL."\n";
-if (empty($coin->dedicatedport)) {
-echo "blocknotify=blocknotify 127.0.0.1:$port {$coin->id} %s\n";}
-else {
-echo "blocknotify=blocknotify 127.0.0.1:$dedport {$coin->id} %s\n";}
+echo "blocknotify=blocknotify 127.0.0.1:$port {$coin->id} %s\n";
 echo " \n";
 echo "' | sudo -E tee {$coin->conf_folder}/$program.conf >/dev/null 2>&1\n";
 echo CHtml::closetag("pre");
@@ -461,10 +451,7 @@ echo CHtml::tag("hr");
 echo "<b>Miner command line</b>:";
 echo CHtml::opentag("pre");
 echo "-a {$coin->algo} ";
-if (empty($coin->dedicatedport)) {
-echo "-o stratum+tcp://".YAAMP_STRATUM_URL.':'.$port.' ';}
-else{
-echo "-o stratum+tcp://".YAAMP_STRATUM_URL.':'.$dedport.' ';}
+echo "-o stratum+tcp://".YAAMP_STRATUM_URL.':'.$port.' ';
 echo "-u {$coin->master_wallet} ";
 echo "-p c={$coin->symbol} ";
 echo "\n";
@@ -479,12 +466,6 @@ echo "</div>";
 
 echo '<div id="tabs-5">';
 
-echo CUFHtml::openActiveCtrlHolder($coin, 'link_bitcointalk');
-echo CUFHtml::activeLabelEx($coin, 'link_bitcointalk');
-echo CUFHtml::activeTextField($coin, 'link_bitcointalk');
-echo "<p class='formHint2'></p>";
-echo CUFHtml::closeCtrlHolder();
-
 echo CUFHtml::openActiveCtrlHolder($coin, 'link_github');
 echo CUFHtml::activeLabelEx($coin, 'link_github');
 echo CUFHtml::activeTextField($coin, 'link_github');
@@ -494,6 +475,30 @@ echo CUFHtml::closeCtrlHolder();
 echo CUFHtml::openActiveCtrlHolder($coin, 'link_site');
 echo CUFHtml::activeLabelEx($coin, 'link_site');
 echo CUFHtml::activeTextField($coin, 'link_site');
+echo "<p class='formHint2'></p>";
+echo CUFHtml::closeCtrlHolder();
+
+echo CUFHtml::openActiveCtrlHolder($coin, 'link_bitcointalk');
+echo CUFHtml::activeLabelEx($coin, 'link_bitcointalk');
+echo CUFHtml::activeTextField($coin, 'link_bitcointalk');
+echo "<p class='formHint2'></p>";
+echo CUFHtml::closeCtrlHolder();
+
+echo CUFHtml::openActiveCtrlHolder($coin, 'link_twitter');
+echo CUFHtml::activeLabelEx($coin, 'link_twitter');
+echo CUFHtml::activeTextField($coin, 'link_twitter');
+echo "<p class='formHint2'></p>";
+echo CUFHtml::closeCtrlHolder();
+
+echo CUFHtml::openActiveCtrlHolder($coin, 'link_facebook');
+echo CUFHtml::activeLabelEx($coin, 'link_facebook');
+echo CUFHtml::activeTextField($coin, 'link_facebook');
+echo "<p class='formHint2'></p>";
+echo CUFHtml::closeCtrlHolder();
+
+echo CUFHtml::openActiveCtrlHolder($coin, 'link_discord');
+echo CUFHtml::activeLabelEx($coin, 'link_discord');
+echo CUFHtml::activeTextField($coin, 'link_discord');
 echo "<p class='formHint2'></p>";
 echo CUFHtml::closeCtrlHolder();
 
