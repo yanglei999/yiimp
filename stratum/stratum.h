@@ -150,7 +150,7 @@ void scrypt_N_R_1_256(const char* input, char* output, uint32_t N, uint32_t R, u
 void sha256_hash_hex(const char *input, char *output, unsigned int len);
 void sha256_double_hash_hex(const char *input, char *output, unsigned int len);
 
-
+	
 #include "algos/a5a.h"
 #include "algos/aergo.h"
 #include "algos/allium.h"
@@ -166,6 +166,8 @@ void sha256_double_hash_hex(const char *input, char *output, unsigned int len);
 #include "algos/blake2s.h"
 #include "algos/blakecoin.h"
 #include "algos/bmw.h"
+#include "algos/beenode.h"
+#include "algos/bmw512.h"
 #include "algos/c11.h"
 #include "algos/dedal.h"
 #include "algos/deep.h"
@@ -186,7 +188,6 @@ void sha256_double_hash_hex(const char *input, char *output, unsigned int len);
 #include "algos/lyra2re.h"
 #include "algos/lyra2v2.h"
 #include "algos/lyra2v3.h"
-#include "algos/lyra2re3.h"
 #include "algos/lyra2vc0ban.h"
 #include "algos/lyra2z.h"
 #include "algos/lyra2zz.h"
@@ -203,6 +204,7 @@ void sha256_double_hash_hex(const char *input, char *output, unsigned int len);
 #include "algos/quark.h"
 #include "algos/qubit.h"
 #include "algos/rainforest.h"
+#include "algos/rfv2.h"
 #include "algos/sha256q.h"
 #include "algos/sha256t.h"
 #include "algos/sib.h"
@@ -224,6 +226,7 @@ void sha256_double_hash_hex(const char *input, char *output, unsigned int len);
 #include "algos/x14.h"
 #include "algos/x15.h"
 #include "algos/x16r.h"
+#include "algos/x16rv2.h"
 #include "algos/x16rt.h"
 #include "algos/x16s.h"
 #include "algos/x17.h"
@@ -231,6 +234,7 @@ void sha256_double_hash_hex(const char *input, char *output, unsigned int len);
 #include "algos/x20r.h"
 #include "algos/x21s.h"
 #include "algos/x22i.h"
+#include "algos/x25x.h"
 #include "algos/xevan.h"
 #include "algos/yescrypt.h"
 #include "algos/yespower.h"

@@ -2,9 +2,7 @@
 require_once('poloniex_trading.php');
 require_once('binance_trading.php');
 require_once('bittrex_trading.php');
-require_once('bitzv2_trading.php');
 require_once('bleutrade_trading.php');
-require_once('bter_trading.php');
 require_once('c-cex_trading.php');
 require_once('kraken_trading.php');
 require_once('yobit_trading.php');
@@ -36,9 +34,6 @@ function cancelExchangeOrder($order=false)
 			case 'bittrex':
 				doBittrexCancelOrder($order->uuid);
 				break;
-			case 'bitz':
-				doBitzCancelOrder($order->uuid);
-				break;
 			case 'bleutrade':
 				doBleutradeCancelOrder($order->uuid);
 				break;
@@ -57,6 +52,7 @@ function cancelExchangeOrder($order=false)
 			case 'livecoin':
 				doLiveCoinCancelOrder($order->uuid);
 				break;
+
 		}
 }
 
@@ -74,11 +70,6 @@ function runExchange($exchangeName=false)
 			case 'binance':
 				doBinanceTrading(true);
 				updateBinanceMarkets();
-				break;
-
-			case 'bter':
-				doBterTrading(true);
-				updateBterMarkets();
 				break;
 
 			case 'crex24':
@@ -104,9 +95,7 @@ function runExchange($exchangeName=false)
 				doBittrexTrading(true);
 				updateBittrexMarkets();
 				break;
-
 			case 'bitz':
-				doBitzTrading(true);
 				updateBitzMarkets();
 				break;
 
