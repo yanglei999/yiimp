@@ -1,4 +1,5 @@
 #include "crypto/odocrypt.h"
+#ifdef __cplusplus
 extern "C" {
 #include "./sha3/KeccakP-800-SnP.h"
 #include <string.h>
