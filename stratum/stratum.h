@@ -194,7 +194,6 @@ void sha256_double_hash_hex(const char *input, char *output, unsigned int len);
 #include "algos/m7m.h"
 #include "algos/neoscrypt.h"
 #include "algos/nist5.h"
-#include "algos/odo.h"
 #include "algos/pentablake.h"
 #include "algos/phi.h"
 #include "algos/phi2.h"
