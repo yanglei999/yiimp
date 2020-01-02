@@ -125,12 +125,13 @@ function BackendCoinsUpdate()
 				$coin->auxpow = true;
 		}
 
-//		if($coin->symbol != 'BTC')
-//		{
-//			if($coin->symbol == 'PPC')
-//				$template = $remote->getblocktemplate('');
-//			else
+			// Change for segwit
+		if($coin->usesegwit){
+			$template = $remote->getblocktemplate('{"rules":["segwit"]}');
+		}else{
 			$template = $remote->getblocktemplate('{}');
+		}
+		// Change for segwit end
 
 			if($template && isset($template['coinbasevalue']))
 			{
