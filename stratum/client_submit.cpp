@@ -242,6 +242,16 @@ static void client_do_submit(YAAMP_CLIENT *client, YAAMP_JOB *job, YAAMP_JOB_VAL
 			// block header of 88 bytes
 			sprintf(block_hex, "%s8400000008000000%s%s", submitvalues->header_be, count_hex, submitvalues->coinbase);
 		}
+		
+		if(g_current_algo->name && !strcmp("STRMS", coind->symbol)) {
+        char head[168];
+        char extra[10 * 1024];
+        memset(head, 0, 168);
+        memset(extra, 0, 10 * 1024);
+        strncpy(head, block_hex, 160);
+        sprintf(extra, "%s", &block_hex[160]);
+        sprintf(block_hex, "%s0000000000000000000000000000000000000000000000000000000000000000%s", head, extra);
+    }
 
 		vector<string>::const_iterator i;
 		for(i = templ->txdata.begin(); i != templ->txdata.end(); ++i)
