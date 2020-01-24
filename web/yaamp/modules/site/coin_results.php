@@ -301,7 +301,7 @@ if ($DCR || $DGB) $account = '*';
 else if ($ETH) $account = $coin->master_wallet;
 
 // If you are getting RPC Error: error -8: label argument must be a valid label name or "*", try this:
-// if ($coin->symbol=="SYMBOL") $account ="*";
+// if ($coin->symbol=="SYMBOL") $account = "*";
 
 $txs = $remote->listtransactions($account, $maxrows);
 
