@@ -214,7 +214,7 @@ void *remote_thread(void *p)
 
 		else if(method)
 		{
-//			debuglog(" * remote method %s\n", method);
+			debuglog(" * remote method %s\n", method);
 			if(!strcmp(method, "mining.set_difficulty"))
 			{
 				if(json_params->u.array.values[0]->type == json_double)
@@ -226,7 +226,7 @@ void *remote_thread(void *p)
 				else if(json_params->u.array.values[0]->type == json_string)
 					remote->difficulty_next = atof(json_params->u.array.values[0]->u.string.ptr);
 
-			//	debuglog("remote difficulty %f\n", remote->difficulty_next);
+				debuglog("remote difficulty %f\n", remote->difficulty_next);
 			}
 
 			else if(!strcmp(method, "mining.set_extranonce"))
