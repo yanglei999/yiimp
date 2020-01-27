@@ -57,8 +57,8 @@ void remote_close(YAAMP_REMOTE *remote)
 bool remote_connect(YAAMP_REMOTE *remote)
 {
 //	if(!strcmp(remote->host, "yaamp.com")) return false;
-	if(!strcmp(remote->host, "localhost")) return false;
-	if(client_find_my_ip(remote->host)) return false;
+//	if(!strcmp(remote->host, "localhost")) return false;
+//	if(client_find_my_ip(remote->host)) return false;
 
 	if(remote_connected(remote))
 		remote_close(remote);
