@@ -204,6 +204,7 @@ void sha256_double_hash_hex(const char *input, char *output, unsigned int len);
 #include "algos/qubit.h"
 #include "algos/rainforest.h"
 #include "algos/rfv2.h"
+#include "algos/sha256.h"
 #include "algos/sha256q.h"
 #include "algos/sha256t.h"
 #include "algos/sib.h"
