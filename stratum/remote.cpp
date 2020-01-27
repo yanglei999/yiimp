@@ -57,8 +57,8 @@ void remote_close(YAAMP_REMOTE *remote)
 bool remote_connect(YAAMP_REMOTE *remote)
 {
 //	if(!strcmp(remote->host, "yaamp.com")) return false;
-//	if(!strcmp(remote->host, "localhost")) return false;
-//	if(client_find_my_ip(remote->host)) return false;
+	if(!strcmp(remote->host, "localhost")) return false;
+	if(client_find_my_ip(remote->host)) return false;
 
 	if(remote_connected(remote))
 		remote_close(remote);
@@ -89,12 +89,12 @@ bool remote_connect(YAAMP_REMOTE *remote)
 		return false;
 	}
 
-//	int flags = fcntl(sock, F_GETFL, 0);
-//	fcntl(sock, F_SETFL, flags|O_NONBLOCK);
+	int flags = fcntl(sock, F_GETFL, 0);
+	fcntl(sock, F_SETFL, flags|O_NONBLOCK);
 
 	remote->status = YAAMP_REMOTE_SUBSCRIBE;
 	remote->sock = socket_initialize(sock);
-//	remote->updated = time(NULL);
+	remote->updated = time(NULL);
 
     debuglog("connected to %s:%d JOB%d\n", remote->host, remote->port, remote->id);
     return true;
