@@ -89,12 +89,12 @@ bool remote_connect(YAAMP_REMOTE *remote)
 		return false;
 	}
 
-//	int flags = fcntl(sock, F_GETFL, 0);
-//	fcntl(sock, F_SETFL, flags|O_NONBLOCK);
+	int flags = fcntl(sock, F_GETFL, 0);
+	fcntl(sock, F_SETFL, flags|O_NONBLOCK);
 
 	remote->status = YAAMP_REMOTE_SUBSCRIBE;
 	remote->sock = socket_initialize(sock);
-//	remote->updated = time(NULL);
+	remote->updated = time(NULL);
 
     debuglog("connected to %s:%d JOB%d\n", remote->host, remote->port, remote->id);
     return true;
@@ -203,12 +203,12 @@ void *remote_thread(void *p)
 			{
 				if(remote->submit_last) remote->submit_last->valid = false;
 
-//				json_value *json_error = json_get_array(json, "error");
-//				if(json_error && json_error->type == json_array && json_error->u.array.length > 1)
-//				{
-//					debuglog("remote submit error JOB%d %d %s ***\n", remote->id,
-//						(int)json_error->u.array.values[0]->u.integer, json_error->u.array.values[1]->u.string.ptr);
-//				}
+				json_value *json_error = json_get_array(json, "error");
+				if(json_error && json_error->type == json_array && json_error->u.array.length > 1)
+				{
+					debuglog("remote submit error JOB%d %d %s ***\n", remote->id,
+						(int)json_error->u.array.values[0]->u.integer, json_error->u.array.values[1]->u.string.ptr);
+				}
 			}
 		}
 
