@@ -89,12 +89,12 @@ bool remote_connect(YAAMP_REMOTE *remote)
 		return false;
 	}
 
-	int flags = fcntl(sock, F_GETFL, 0);
-	fcntl(sock, F_SETFL, flags|O_NONBLOCK);
+//	int flags = fcntl(sock, F_GETFL, 0);
+//	fcntl(sock, F_SETFL, flags|O_NONBLOCK);
 
 	remote->status = YAAMP_REMOTE_SUBSCRIBE;
 	remote->sock = socket_initialize(sock);
-	remote->updated = time(NULL);
+//	remote->updated = time(NULL);
 
     debuglog("connected to %s:%d JOB%d\n", remote->host, remote->port, remote->id);
     return true;
@@ -291,7 +291,6 @@ void *remote_thread(void *p)
 	job_signal();
 	pthread_exit(NULL);
 }
-
 
 
 
