@@ -203,12 +203,12 @@ void *remote_thread(void *p)
 			{
 				if(remote->submit_last) remote->submit_last->valid = false;
 
-//				json_value *json_error = json_get_array(json, "error");
-//				if(json_error && json_error->type == json_array && json_error->u.array.length > 1)
-//				{
-//					debuglog("remote submit error JOB%d %d %s ***\n", remote->id,
-//						(int)json_error->u.array.values[0]->u.integer, json_error->u.array.values[1]->u.string.ptr);
-//				}
+				json_value *json_error = json_get_array(json, "error");
+				if(json_error && json_error->type == json_array && json_error->u.array.length > 1)
+				{
+					debuglog("remote submit error JOB%d %d %s ***\n", remote->id,
+						(int)json_error->u.array.values[0]->u.integer, json_error->u.array.values[1]->u.string.ptr);
+				}
 			}
 		}
 
@@ -291,7 +291,6 @@ void *remote_thread(void *p)
 	job_signal();
 	pthread_exit(NULL);
 }
-
 
 
 
